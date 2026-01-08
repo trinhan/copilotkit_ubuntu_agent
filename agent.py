@@ -6,7 +6,6 @@ import google.auth
 import dotenv
 import prompt
 import os
-from copilotkit import CopilotKitState 
 
 dotenv.load_dotenv()
 
@@ -17,9 +16,6 @@ bigquery_toolset = BigQueryToolset(
 )
 
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
-
-class YourAgentState(CopilotKitState): 
-    your_additional_properties: str
 
 bq_search_agent = Agent(
     name="bq_search_agent",
@@ -46,8 +42,3 @@ root_agent = Agent(
 
 def get_bigquery_agent():
  return root_agent
-
-async def agent_node(state: YourAgentState, config: RunnableConfig):
-    # Access the tools from the copilotkit property
-    tools = state.get("copilotkit", {}).get("actions", []) 
-    model = ChatOpenAI(model="gemini-3.0-preview").bind_tools(tools)

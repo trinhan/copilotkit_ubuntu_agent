@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { useCopilotAction } from "@copilotkit/react-core";
+import { useFrontendTool, useCopilotAction } from "@copilotkit/react-core";
 import { CopilotChat } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
 
@@ -34,7 +34,7 @@ const Header = () => (
       <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
         <i className="fa-solid fa-layer-group"></i>
       </div>
-      <span className="font-semibold text-lg tracking-tight text-white">Dev<span className="text-blue-500">Agent</span></span>
+      <span className="font-semibold text-lg tracking-tight text-white">Ubuntu<span className="text-blue-500">Agent</span></span>
     </div>
     <div className="text-xs text-slate-500 font-mono">
       Connected to Agent
@@ -245,4 +245,21 @@ export default function Page() {
       </main>
     </div>
   );
+
+  useFrontendTool({
+    name: "sayHello",
+    description: "Say hello to the user",
+    parameters: [
+      {
+        name: "name",
+        type: "string",
+        description: "The name of the user to say hello to",
+        required: true,
+      },
+    ],
+    handler: async ({ name }) => {
+      alert(`Hello, ${name}!`);
+    },
+  });
+
 }

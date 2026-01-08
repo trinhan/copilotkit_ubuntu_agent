@@ -17,13 +17,12 @@ PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "gen-lang-client-0581554092")
 DATASET_ID = os.getenv("BIGQUERY_DATASET", "stackoverflow")
 TABLE_ID = os.getenv("BIGQUERY_TABLE", "ubuntu_questions")
 
-
 # ------------------------------------------------------------------------------
 # SCHEMA DEFINITION
 # ------------------------------------------------------------------------------
 # Update this section with your actual table names and columns.
 # Giving the agent this "map" prevents hallucinations.
-SCHEMA_CONTEXT = """
+SCHEMA_CONTEXT = f"""
 Project ID: {PROJECT_ID}
 Dataset: {DATASET_ID}
 Table: {TABLE_ID}
@@ -64,10 +63,18 @@ c. Where possible, summarise the text into 1 concise sentence
 3.  Also implement a web search to retrieve other articles which are relevant to this topic, report back the content as well as the website links as references
 
 **4. Displaying data to dashboard **
-You have access to a tool called `update_dashboard` which registers results . You **MUST** use this tool to display the detailed results (top 3 posts, summaries, view counts from stackoverflow or general web links) to the user.
+You have access to a tool called `update_dashboard` which registers results. You **MUST** use this tool to display the detailed results.
+    
     *   **Snippet:** Populate the `summary` field of the tool with the Markdown-formatted list of posts.
-    *   **Title:** Use a relevant title like "Top Ubuntu StackOverflow Questions".
-    *   **References:** Pass the urls as references if available. These are in the format: title, url, source
+    *   **Title:** Use a relevant title.
+    *   **References:** Pass the urls as references if available.
+
+**CRITICAL: Separate Tabs for Different Sources**
+You must display StackOverflow results and Google Search results in their own separate tabs.
+1.  **StackOverflow Results**: Call `update_dashboard` with `active_tab="stackoverflow"` and `title="Top StackOverflow Questions"`. Put ONLY the StackOverflow posts in the `summary`.
+2.  **Google Search Results**: Call `update_dashboard` with `active_tab="google"` and `title="Web Search Results"`. Put ONLY the web search results in the `summary`.
+
+**If you have results from BOTH sources, you MUST call `update_dashboard` TWICE (once for each active_tab).**
 
 **5. Chat Response:** After calling the tool, answer the user in the chat briefly:
     *   A quick summary of the information you have found and the tools implemented (e.g. stackoverflow and google search)
