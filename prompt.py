@@ -2,6 +2,21 @@
 prompt.py
 Stores the system instructions and schema definitions for the BigQuery Agent.
 """
+# ------------------------------------------------------------------------------
+# UPDATE INFORMATION
+# ------------------------------------------------------------------------------
+# Update this section with your actual table names and columns.
+
+
+import os
+import dotenv
+
+dotenv.load_dotenv()
+
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "gen-lang-client-0581554092")
+DATASET_ID = os.getenv("BIGQUERY_DATASET", "stackoverflow")
+TABLE_ID = os.getenv("BIGQUERY_TABLE", "ubuntu_questions")
+
 
 # ------------------------------------------------------------------------------
 # SCHEMA DEFINITION
@@ -9,9 +24,9 @@ Stores the system instructions and schema definitions for the BigQuery Agent.
 # Update this section with your actual table names and columns.
 # Giving the agent this "map" prevents hallucinations.
 SCHEMA_CONTEXT = """
-Project ID: 'lab-atrinh-vv5e3f7cc6'
-Dataset: 'US_demo'
-Table: 'Ubuntu_Queries`
+Project ID: {PROJECT_ID}
+Dataset: {DATASET_ID}
+Table: {TABLE_ID}
 
 Contains a list of queries which are listed on stackoverflow about ubuntu.
 

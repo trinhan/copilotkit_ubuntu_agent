@@ -5,7 +5,8 @@ from google.adk.tools.bigquery import BigQueryCredentialsConfig, BigQueryToolset
 import google.auth
 import dotenv
 import prompt
-
+import os
+from copilotkit import CopilotKitState 
 
 dotenv.load_dotenv()
 
@@ -15,22 +16,27 @@ bigquery_toolset = BigQueryToolset(
   credentials_config=credentials_config
 )
 
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
+
+class YourAgentState(CopilotKitState): 
+    your_additional_properties: str
+
 bq_search_agent = Agent(
     name="bq_search_agent",
-    model="gemini-2.5-flash",
+    model=MODEL_NAME,
     instruction="Use your search tool to look up facts in big query",
     tools=[bigquery_toolset]
 )
 
 web_search_agent = Agent(
     name="web_search_agent",
-    model="gemini-2.5-flash",
+    model=MODEL_NAME,
     instruction="Use the google search tool to find relevant information on the web.",
     tools=[google_search] 
 )
 
 root_agent = Agent(
- model="gemini-2.5-flash",
+ model=MODEL_NAME,
  name="main_bigquery_agent",
  description="Agent that returns stackoverflow posts with issues similar to the questions the user has presented",
  instruction=prompt.AGENT_INSTRUCTION,
@@ -41,3 +47,7 @@ root_agent = Agent(
 def get_bigquery_agent():
  return root_agent
 
+async def agent_node(state: YourAgentState, config: RunnableConfig):
+    # Access the tools from the copilotkit property
+    tools = state.get("copilotkit", {}).get("actions", []) 
+    model = ChatOpenAI(model="gemini-3.0-preview").bind_tools(tools)
