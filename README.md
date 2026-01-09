@@ -22,9 +22,8 @@ Authorize your local environment to use your Google Cloud credentials:
 ```bash
 gcloud auth application-default login
 ```
-
-Request the information required for the `.env` file. The following is required:
-
+### 3. Setup Backend
+1. Create a `.env` file in the root directory. The following is required:
 ```
 MODEL_NAME=gemini-2.5-flash
 GOOGLE_GENAI_USE_VERTEXAI=1
@@ -33,9 +32,6 @@ GOOGLE_CLOUD_LOCATION=
 BIGQUERY_DATASET=
 BIGQUERY_TABLE=
 ```
-
-### 3. Setup Backend
-1. Create a `.env` file in the root directory (see `.env.example`).
 2. Install dependencies and run:
 
 ```bash
@@ -59,7 +55,11 @@ npm run dev
 
 ### 5. Running with Docker (Monolithic)
 
-To run the entire application (Backend + Frontend) in a single container:
+To build the entire application (Backend + Frontend) in a single container:
+
+```bash
+docker build -t ubuntu-agent .
+```
 
 When running inside Docker locally, the container doesn't have access to your host's `gcloud` credentials. Use one of these methods to authenticate:
 

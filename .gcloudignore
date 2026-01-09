@@ -1,0 +1,22 @@
+# .gcloudignore
+# Use this to prevent large or sensitive files from being uploaded to Google Cloud Build.
+
+.git
+.gitignore
+.dockerignore
+.venv
+venv
+__pycache__
+*.pyc
+node_modules
+.next
+.env
+.DS_Store
+keys/
+!package-lock.json
+!package.json
+!uv.lock
+
+# Frontend specific
+my-copilot-app/node_modules
+my-copilot-app/.next
