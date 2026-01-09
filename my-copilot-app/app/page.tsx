@@ -234,10 +234,10 @@ export default function Page() {
         {/* RIGHT PANEL - CHAT */}
         <section className="w-full md:w-[40%] flex flex-col bg-slate-950">
           <CopilotChat
-            instructions="You are a helpful assistant. When you find information, you MUST use the 'update_dashboard' tool. IMPORTANT: You must put the detailed content of your findings into the 'summary' field of the tool so it appears on the dashboard. Do not just output the answer in the chat; ensure the 'summary' field is populated."
+            instructions="You are a helpful assistant searching for relevant posts about ubuntu in bigquery, or performing a web search when you can't find this information. When you find information, you MUST use the 'update_dashboard' tool. IMPORTANT: You must put the detailed content of your findings into the 'summary' field of the tool so it appears on the dashboard. Do not just output the answer in the chat; ensure the 'summary' field is populated."
             labels={{
               title: "Helpdesk Assistant",
-              initial: "How can I help you today? I can help you find answers about Ubuntu",
+              initial: "How can I help you today? I can help you find relevant posts about Ubuntu in our big query database",
             }}
             className="h-full"
           />
