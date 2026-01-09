@@ -23,6 +23,17 @@ Authorize your local environment to use your Google Cloud credentials:
 gcloud auth application-default login
 ```
 
+Request the information required for the `.env` file. The following is required:
+
+```
+MODEL_NAME=gemini-2.5-flash
+GOOGLE_GENAI_USE_VERTEXAI=1
+GOOGLE_CLOUD_PROJECT=
+GOOGLE_CLOUD_LOCATION=
+BIGQUERY_DATASET=
+BIGQUERY_TABLE=
+```
+
 ### 3. Setup Backend
 1. Create a `.env` file in the root directory (see `.env.example`).
 2. Install dependencies and run:
@@ -31,10 +42,6 @@ gcloud auth application-default login
 # Using uv (recommended)
 uv sync
 uv run main.py
-
-# OR using pip
-pip install .
-python main.py
 ```
 *The backend will start on `http://localhost:8000`.*
 
@@ -48,9 +55,7 @@ npm install
 npm run dev
 ```
 
-*The frontend will start on `http://localhost:3000` (or 3001).*
-
----
+*The frontend will start on `http://localhost:3000`.*
 
 ## 🛠 Features
 
@@ -59,4 +64,23 @@ npm run dev
 - **Interactive Dashboard**: Displays results in dedicated "StackOverflow" and "Google" tabs.
 - **CopilotKit Integration**: Real-time AI chat powered by Google ADK.
 
+## 🛠 Test Example
 
+Type the following:
+
+`how to uninstall python from ubuntu?`
+
+The output would be similar to:
+
+### StackOverflow Tab
+
+1. **How to completely uninstall python 2.7.13 on Ubuntu 16.04** (Views: 466608)
+   * The user installed Python 2.7.13, which became the default and broke `pip`; they seek to remove it and revert to 2.7.12.
+2. **Two Python Version conflict in Ubuntu Oneiric 11.10 issue: ImportError: No module** (Views: 760)
+   * The user has two Python versions, experiencing `ImportError` after installing Python 2.7.5, and needs help running `virtualenv` with the correct version.
+3. **Unable to uninstall python3.7 in Ubuntu20.04** (Views: 463)
+   * The user is facing `apt` dependency errors when trying to uninstall or upgrade Python 3.7 after an Ubuntu update.
+
+### Google Tab
+
+* Uninstalling Python from Ubuntu requires caution, primarily to avoid breaking system functionalities, and involves identifying installed versions, using `apt remove` or `apt purge` for user-installed versions, or manually deleting files for source installations, followed by updating environment paths. *

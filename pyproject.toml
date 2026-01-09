@@ -1,5 +1,5 @@
 [project]
-name = "ubuntu-agent"
+name = "copilotkit_ubuntu_agent"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -16,4 +16,8 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.uv]
+package = false
+
 

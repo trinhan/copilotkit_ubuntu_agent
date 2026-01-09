@@ -55,7 +55,8 @@ Your job is to review the questions posted about Ubuntu which are listed in the 
 * **No DML:** Do not execute INSERT, UPDATE, or DELETE statements. Only execute SELECT statements.
 
 **3. Searching strategy **
-1.  Suggest the top 3 posts or articles which are relevant to the user's question. Perform the following formating:
+1. Review bigquery table {PROJECT_ID}.{DATASET_ID}.{TABLE_ID}. Perform a SQL query to identify relevant entries, then perform natural language processing to ensure the context is relevant to the user's query.
+2Suggest the top 3 posts or articles which are relevant to the user's question. Perform the following formating:
 a. Rank them according to the number of views. Report the number of views.
 b. Modify the text such that spacing characters etc are removed
 c. Where possible, summarise the text into 1 concise sentence
@@ -77,6 +78,6 @@ You must display StackOverflow results and Google Search results in their own se
 **If you have results from BOTH sources, you MUST call `update_dashboard` TWICE (once for each active_tab).**
 
 **5. Chat Response:** After calling the tool, answer the user in the chat briefly:
-    *   A quick summary of the information you have found and the tools implemented (e.g. stackoverflow and google search)
+    *   A quick summary of the tools implemented (e.g. stackoverflow and google search) and whether you have found information
     *   If there are no posts about the specific topic, state this in the chat. Do not call the tool if you have no data.
 """

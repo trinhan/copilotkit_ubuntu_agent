@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useFrontendTool, useCopilotAction } from "@copilotkit/react-core";
 import { CopilotChat } from "@copilotkit/react-ui";
 import "@copilotkit/react-ui/styles.css";
+import ReactMarkdown from 'react-markdown';
 
 // --- Types ---
 
@@ -130,8 +131,12 @@ const Dashboard = ({ state, onTabChange }: { state: DashboardState, onTabChange:
         <div className="flex-1 overflow-y-auto px-8 pb-8">
           <div className="prose prose-invert prose-slate max-w-none mb-10">
             <div className="glass-panel p-6 rounded-2xl">
-              <div className="whitespace-pre-wrap text-slate-300 leading-relaxed">
-                {activeData.summary || <span className="text-slate-500 italic">Waiting for summary...</span>}
+              <div className="text-slate-300 leading-relaxed">
+                {activeData.summary ? (
+                  <ReactMarkdown>{activeData.summary}</ReactMarkdown>
+                ) : (
+                  <span className="text-slate-500 italic">Waiting for summary...</span>
+                )}
               </div>
             </div>
           </div>
@@ -184,7 +189,7 @@ export default function Page() {
         name: "summary",
         type: "string",
         required: true,
-        description: "The detailed summary text to display. This is the most important field."
+        description: "The detailed summary text to display. This is the most important field. This information has been pre-formatted in markdown"
       },
       {
         name: "references",

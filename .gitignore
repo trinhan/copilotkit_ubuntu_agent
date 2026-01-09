@@ -1,8 +1,24 @@
+# OS files
 .DS_Store
+
+# Environments
 .env
+.venv/
+venv/
 .python-version
+
+# Python
 __pycache__/
-.env
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Node / Frontend
 node_modules/
-.next
-venv
+.next/
+out/
+.vercel
+/my-copilot-app/.next/
+/my-copilot-app/node_modules/
