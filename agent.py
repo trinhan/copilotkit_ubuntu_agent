@@ -20,14 +20,14 @@ MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
 bq_search_agent = Agent(
     name="bq_search_agent",
     model=MODEL_NAME,
-    instruction="Use your search tool to look up facts in big query",
+    instruction=prompt.BQ_INSTRUCTION,
     tools=[bigquery_toolset]
 )
 
 web_search_agent = Agent(
     name="web_search_agent",
     model=MODEL_NAME,
-    instruction="Use the google search tool to find relevant information on the web.",
+    instruction=prompt.WEBSEARCH_INSTRUCTION,
     tools=[google_search] 
 )
 

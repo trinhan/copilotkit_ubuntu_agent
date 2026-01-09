@@ -6,6 +6,7 @@
 .venv/
 venv/
 .python-version
+keys/
 
 # Python
 __pycache__/
