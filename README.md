@@ -10,6 +10,18 @@ The root agent (defined in `ubuntu_agent/agent.py`) uses two specialized tools:
 
 This agent is served via FastAPI in `main.py`.
 
+To build the same bigquery table used in this demo, run the following command in BigQuery:
+
+```
+SELECT
+  *
+FROM
+  `bigquery-public-data.stackoverflow.posts_questions`
+WHERE title LIKE '%Ubuntu%';
+```
+
+This data has also been saved in `test_data` folder
+
 ## Building Guide
 
 ### 1. Prerequisites
@@ -18,12 +30,22 @@ This agent is served via FastAPI in `main.py`.
 - **Google Cloud SDK (gcloud)** authenticated with a project that has BigQuery and Vertex AI enabled.
 
 ### 2. Authentication
-Authorize your local environment to use your Google Cloud credentials:
+
+1. Authorize your local environment to use your Google Cloud credentials:
 ```bash
 gcloud auth application-default login
 ```
-### 3. Setup Backend
-1. Create a `.env` file in the root directory. The following is required:
+
+2. Generate a GCP service key with the following permissions for containerisation
+
+* bigquery data viewer 
+* bigquery job user 
+* vertex AI service agent 
+* vertex ai reasoning engine service agent (maybe)
+
+Download the service key `key.json`, noting the path
+
+3. Create a `.env` file in the root directory. The following is required:
 ```
 MODEL_NAME=gemini-2.5-flash
 GOOGLE_GENAI_USE_VERTEXAI=1
@@ -31,9 +53,25 @@ GOOGLE_CLOUD_PROJECT=
 GOOGLE_CLOUD_LOCATION=
 BIGQUERY_DATASET=
 BIGQUERY_TABLE=
-SERVICE_ACCOUNT=
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json
+SERVICE_ACCOUNT=XXXX.iam.gserviceaccount.com
 ```
-2. Install dependencies and run:
+
+4. Tests for connectivity [Optional] 
+
+To test that the correct credentials have been used, run the pytests.
+
+```
+uv run pytest -s
+```
+
+This will print to screen GOOGLE_CLOUD_LOCATION, GOOGLE_CLOUD_PROJECT, Service Account Email.
+
+It will also confirm the first entry in the dependent big_query table
+
+
+### 3. Setup Backend
+Install dependencies and run:
 
 ```bash
 # Using uv (recommended)
@@ -51,8 +89,9 @@ cd my-copilot-app
 npm install
 npm run dev
 ```
-
 *The frontend will start on `http://localhost:3000`.*
+
+See *Testing* for an example command to assess performance
 
 ### 5. Connecting the front and back end
 
@@ -72,7 +111,7 @@ docker build -t ubuntu-agent .
 
 When running inside Docker locally, the container doesn't have access to your host's `gcloud` credentials. To authenticate:
 
-1. [Download a Service Account JSON key](https://console.cloud.google.com/iam-admin/serviceaccounts) from GCP. Note this key requires the permissions: bigquery data viewer, bigquery job user, vertex AI service agent, vertex ai reasoning engine service agent (maybe)
+1. [Download a Service Account JSON key](https://console.cloud.google.com/iam-admin/serviceaccounts) from GCP. Note this key requires the permissions: 
 2. Place it in the root folder (e.g., `key.json`).
 3. Run with the correctly mapped path:
 

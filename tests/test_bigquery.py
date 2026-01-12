@@ -8,7 +8,7 @@ from agent import bq_search_agent
 from prompt import PROJECT_ID, DATASET_ID, TABLE_ID
 
 # Load environment variables
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 @pytest.fixture
 def bq_client():
@@ -21,7 +21,6 @@ def test_print_env_variables():
     project = os.getenv("GOOGLE_CLOUD_PROJECT")
     print(f"\n--- Environment Variables ---")
     print(f"GOOGLE_CLOUD_LOCATION: {location}")
-    print(f"GOOGLE_CLOUD_PROJECT: {project}")
     print(f"GOOGLE_CLOUD_PROJECT: {project}")
     assert location is not None, "GOOGLE_CLOUD_LOCATION is not set in .env"
 
