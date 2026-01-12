@@ -43,7 +43,7 @@ gcloud auth application-default login
 * vertex AI service agent 
 * vertex ai reasoning engine service agent (maybe)
 
-Download the service key `key.json`, noting the path
+Download the service key `key.json`, noting the path. The service account name will be added to the .env file below:
 
 3. Create a `.env` file in the root directory. The following is required:
 ```
@@ -53,7 +53,6 @@ GOOGLE_CLOUD_PROJECT=
 GOOGLE_CLOUD_LOCATION=
 BIGQUERY_DATASET=
 BIGQUERY_TABLE=
-GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json
 SERVICE_ACCOUNT=XXXX.iam.gserviceaccount.com
 ```
 
@@ -103,7 +102,7 @@ To ensure that the back-end is started, there is a wait loop in `start.sh`.
 
 ### 6. Running with Docker (Monolithic)
 
-To build the entire application (Backend + Frontend) in a single container:
+To build the entire application (Backend + Frontend) in a single container. Note in this version, the `.env` file will be built into the container. To avoid this, add `.env` to the `.dockerignore` and `.gcloudignore` files.
 
 ```bash
 docker build -t ubuntu-agent .
@@ -119,12 +118,13 @@ When running inside Docker locally, the container doesn't have access to your ho
 docker run --rm -p 8080:8080 \
   -e PORT=8080 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/key.json \
-  -v $(pwd)/keys/key.json:/app/key.json \
-  ubuntu-agent
+  -v /path/to/key.json:/app/key.json \
+  ubuntu-agent-v2
 ```
 *The application will be accessible at `http://localhost:8080`.*
 
-To run the container interactively and inspect the file structure, add `-it --entrypoint /bin/bash` to the `docker run` command.
+**Note 1**: To run the container interactively and inspect the file structure, add `-it --entrypoint /bin/bash` to the `docker run` command.
+**Note 2**: If you decide not to build the `.env` file into the container, it can be mounted using `--env-file .env`
 
 ### 6. Deploy to Google Cloud Run
 
@@ -141,8 +141,9 @@ We provide a `deploy.sh` script to automate the build and deployment process usi
 
 3. **Configure Environment**:
    After deployment, go to the Cloud Run console and modify the deployment parameters:
-   - Add the .env file
-   - Ensure the correct service account is used
+   - Go to edit and deploy new revision
+   - Edit Container > Variables and Secrets > Upload the .env file if parameters change
+   - Security > Service Account if the service account changes
 
 ---
 

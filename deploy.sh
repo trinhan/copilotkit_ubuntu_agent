@@ -8,14 +8,14 @@ fi
 
 # Configuration
 PROJECT_ID=${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project)}
-SERVICE_NAME="ubuntu-agent-v2"
-REGION=${GOOGLE_CLOUD_LOCATION:-"us-central1"}
+SERVICE_NAME="my-ubuntu-agent"
+REGION=${GOOGLE_CLOUD_LOCATION}
 SERVICE_ACCOUNT=${SERVICE_ACCOUNT}
 IMAGE_NAME="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
 
-echo "🚀 Starting Deployment for ${SERVICE_NAME} to Project: ${PROJECT_ID}"
+echo "🚀 Starting Deployment for ${SERVICE_NAME} to Project: ${PROJECT_ID} using service account ${SERVICE_ACCOUNT}"
 
-# 1. Build and Push to Google Container Registry
+#1. Build and Push to Google Container Registry
 echo "📦 Building and pushing Docker image..."
 gcloud builds submit --tag ${IMAGE_NAME} .
 
