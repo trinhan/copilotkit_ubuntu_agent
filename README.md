@@ -124,6 +124,7 @@ docker run --rm -p 8080:8080 \
 *The application will be accessible at `http://localhost:8080`.*
 
 **Note 1**: To run the container interactively and inspect the file structure, add `-it --entrypoint /bin/bash` to the `docker run` command.
+
 **Note 2**: If you decide not to build the `.env` file into the container, it can be mounted using `--env-file .env`
 
 ### 6. Deploy to Google Cloud Run
