@@ -7,7 +7,7 @@ import dotenv
 import prompt
 import os
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 credentials, _ = google.auth.default()
 credentials_config = BigQueryCredentialsConfig(credentials=credentials)

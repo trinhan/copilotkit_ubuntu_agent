@@ -5,10 +5,9 @@ from agent import root_agent
 import os
 import dotenv
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(override=True)
 
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
-
 # agent = LlmAgent(
 #     name="assistant",
 #     model=MODEL_NAME,

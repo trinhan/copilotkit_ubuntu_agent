@@ -61,21 +61,22 @@ To build the entire application (Backend + Frontend) in a single container:
 docker build -t ubuntu-agent .
 ```
 
-When running inside Docker locally, the container doesn't have access to your host's `gcloud` credentials. Use one of these methods to authenticate:
+When running inside Docker locally, the container doesn't have access to your host's `gcloud` credentials. To authenticate:
 
 1. [Download a Service Account JSON key](https://console.cloud.google.com/iam-admin/serviceaccounts) from GCP. Note this key requires the permissions: bigquery data viewer, bigquery job user, vertex AI service agent, vertex ai reasoning engine service agent (mayble)
 2. Place it in the root folder (e.g., `key.json`).
 3. Run with the correctly mapped path:
 
 ```bash
-docker run -p 8080:8080 \
-  -e PORT=8080 \
-  --env-file .env \
+docker run --rm -p 8084:8084 \
+  -e PORT=8084 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/key.json \
-  -v $(pwd)/key.json:/app/key.json \
+  -v $(pwd)/keys/key.json:/app/key.json \
   ubuntu-agent
 ```
-*The application will be accessible at `http://localhost:8080`.*
+*The application will be accessible at `http://localhost:8084`.*
+
+To run and inspect the file structure, add `-it --entrypoint /bin/bash` to the `docker run` command.
 
 ### 6. Deploy to Google Cloud Run
 
@@ -93,16 +94,6 @@ We provide a `deploy.sh` script to automate the build and deployment process usi
 3. **Configure Environment**:
    After deployment, go to the Cloud Run console and add your environment variables (like `BIGQUERY_DATASET`, `MODEL_NAME`, etc.) to the service configuration.
 
-### 7. Alternative: Local Docker Build & Push
-
-If you prefer to build the image on your local machine and push it to GCR manually:
-
-1. **Run the local deployment script**:
-   ```bash
-   ./deploy_local.sh
-   ```
-   *This script handles `docker build`, `docker push`, and `gcloud run deploy` in one go.*
-
 ---
 
 ## 🛠 Features
@@ -116,7 +107,7 @@ If you prefer to build the image on your local machine and push it to GCR manual
 
 Type the following:
 
-`how to uninstall python from ubuntu?`
+`perform a bigquery search on how to uninstall python from ubuntu?`
 
 The output would be similar to:
 

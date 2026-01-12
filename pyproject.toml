@@ -11,6 +11,9 @@ dependencies = [
     "uvicorn>=0.30.0",
     "python-dotenv>=1.0.0",
     "google-auth>=2.0.0",
+    "pytest>=8.0.0",
+    "google-cloud-bigquery>=3.0.0",
+    "pytest-asyncio>=0.23.0",
 ]
 
 [build-system]
@@ -19,5 +22,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
 
 

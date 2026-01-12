@@ -10,7 +10,6 @@ __pycache__
 *.pyc
 node_modules
 .next
-.env
 .DS_Store
 keys/
 !package-lock.json
