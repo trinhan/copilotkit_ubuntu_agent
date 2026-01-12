@@ -119,7 +119,7 @@ docker run --rm -p 8080:8080 \
   -e PORT=8080 \
   -e GOOGLE_APPLICATION_CREDENTIALS=/app/key.json \
   -v /path/to/key.json:/app/key.json \
-  ubuntu-agent-v2
+  ubuntu-agent
 ```
 *The application will be accessible at `http://localhost:8080`.*
 
