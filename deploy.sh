@@ -1,9 +1,16 @@
 #!/bin/bash
 
+# Load environment variables from .env if it exists
+if [ -f .env ]; then
+  # Sourcing .env file
+  export $(grep -v '^#' .env | xargs)
+fi
+
 # Configuration
-PROJECT_ID=$(gcloud config get-value project)
-SERVICE_NAME="ubuntu-agent"
-REGION="us-central1"
+PROJECT_ID=${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project)}
+SERVICE_NAME="ubuntu-agent-v2"
+REGION=${GOOGLE_CLOUD_LOCATION:-"us-central1"}
+SERVICE_ACCOUNT=${SERVICE_ACCOUNT}
 IMAGE_NAME="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
 
 echo "🚀 Starting Deployment for ${SERVICE_NAME} to Project: ${PROJECT_ID}"
@@ -22,6 +29,7 @@ gcloud run deploy ${SERVICE_NAME} \
   --port 3000 \
   --memory 1Gi \
   --cpu 1 \
+  --service-account ${SERVICE_ACCOUNT} \
   --description "Monolithic Ubuntu Helpdesk Agent"
 
 # The --port 3000 tells Cloud Run to send traffic to our frontend's default port.

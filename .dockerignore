@@ -19,3 +19,6 @@ my-copilot-app/.next
 !my-copilot-app/package.json
 !my-copilot-app/package-lock.json
 !uv.lock
+
+# Overrides
+!keys/

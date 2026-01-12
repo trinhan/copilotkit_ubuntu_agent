@@ -9,13 +9,15 @@ import os
 
 dotenv.load_dotenv(override=True)
 
+# Set model name and fallback
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
+
+# Load credentials
 credentials, _ = google.auth.default()
 credentials_config = BigQueryCredentialsConfig(credentials=credentials)
 bigquery_toolset = BigQueryToolset(
-  credentials_config=credentials_config
-)
-
-MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
+    credentials_config=credentials_config
+  )
 
 bq_search_agent = Agent(
     name="bq_search_agent",

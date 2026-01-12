@@ -19,3 +19,7 @@ keys/
 # Frontend specific
 my-copilot-app/node_modules
 my-copilot-app/.next
+
+# Overrides to include required files
+!.env
+!keys/
