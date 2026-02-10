@@ -1,0 +1,9 @@
+google-adk
+ag-ui-adk
+fastapi
+uvicorn
+google-auth
+python-dotenv
+pydantic
+google-cloud-aiplatform
+google-cloud-bigquery

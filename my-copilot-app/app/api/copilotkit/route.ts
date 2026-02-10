@@ -10,16 +10,17 @@ const serviceAdapter = new ExperimentalEmptyAdapter();
 
 const runtime = new CopilotRuntime({
   agents: {
-    my_agent: new HttpAgent({ url: "http://localhost:8000/" }),
+    main_bigquery_agent: new HttpAgent({ url: process.env.REMOTE_AGENT_URL }),
   }
 });
 
-export const POST = async (req: NextRequest) => {
-  const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
-    runtime,
-    serviceAdapter,
-    endpoint: "/api/copilotkit",
-  });
+// Initialize the handler OUTSIDE the POST function
+const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
+  runtime,
+  serviceAdapter,
+  endpoint: "/api/copilotkit",
+});
 
+export const POST = async (req: NextRequest) => {
   return handleRequest(req);
 };
