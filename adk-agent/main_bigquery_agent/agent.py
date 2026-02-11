@@ -2,6 +2,7 @@ from google.adk.agents import Agent
 from google.adk.tools import google_search
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.tools.bigquery import BigQueryCredentialsConfig, BigQueryToolset
+from google.adk.tools.ag_ui_tools import AGUIToolset
 import google.auth
 import dotenv
 from . import prompt
@@ -37,7 +38,8 @@ root_agent = Agent(
  description="Agent that returns stackoverflow posts with issues similar to the questions the user has presented",
  instruction=prompt.AGENT_INSTRUCTION,
  tools=[AgentTool(bq_search_agent, skip_summarization=False), 
-        AgentTool(web_search_agent, skip_summarization=False)]
+        AgentTool(web_search_agent, skip_summarization=False),
+        AGUIToolset()]
 )
 
 def get_bigquery_agent():

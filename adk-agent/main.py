@@ -23,6 +23,8 @@ adk_agent = ADKAgent(
 )
 
 app = FastAPI()
+
+# Your frontend (Next.js + CopilotKit) will call this endpoint.
 add_adk_fastapi_endpoint(app, adk_agent, path="/")
 
 if __name__ == "__main__":
