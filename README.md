@@ -151,6 +151,8 @@ docker run --rm -p 8080:8080 \
 
 **Note 2**: If you decide not to build the `.env` file into the container, it can be mounted using `--env-file .env`
 
+**Tip:** If Docker ports are in use, run `docker stop $(docker ps -q)`
+
 ### 10A. Deploy to Google Cloud Run
 
 The `deploy.sh` script automates the build and deployment process to Google Cloud Run.
@@ -176,7 +178,7 @@ The `deploy.sh` script automates the build and deployment process to Google Clou
 ### 6B. Develop back-end
 
 See the instructions for the back-end in the [adk-agent README](adk-agent/README.md), including setting up `.env` file.
-Instructions for deploying to cloudrun is embedded in the README.
+Instructions for deploying to cloudrun is embedded in the README.md.
 
 ### 7B. Develop front-end
 

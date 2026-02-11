@@ -23,8 +23,9 @@ root_agent = Agent(
         AgentTool(web_search_agent, skip_summarization=False),
         AGUIToolset()]
 )
-
 ```
+
+NOTE: AGUIToolset() dependencies is not working
 
 3. Create middleware by using fastAPI server in `main.py`
 
@@ -107,7 +108,7 @@ gcloud run deploy <APP_NAME>\
   --region <REGION> \
   --project <PROJECT_ID> \
   --service-account <SERVICE_ACCOUNT> \ ## if applicable
-  --allow-unauthenticated # optional
+  --allow-unauthenticated # optional ## also decide if we need a port here
 ```
 
 

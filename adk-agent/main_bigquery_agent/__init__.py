@@ -1,2 +1,2 @@
 # ubuntu_agent package
-import . from agent
+from .agent import root_agent

@@ -1,5 +1,23 @@
 # Front end files
 
+## Folder structure
+
+```text
+my-copilot-app/
+├── app/                    # Next.js App Router files
+│   ├── api/copilotkit/
+│   │   └── route.ts        # CopilotKit runtime endpoint
+│   ├── globals.css         # Global styles
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Main landing page - edit this
+├── public/                 # Static assets (images, icons)
+├── .env                    # Environment variables (local)
+├── Dockerfile              # Docker configuration
+├── next.config.ts          # Next.js configuration
+├── package.json            # Dependencies and scripts
+├── tsconfig.json           # TypeScript configuration
+└── verify_token.js         # Token verification helper
+```
 ## Local development
 
 This assumes the back-end has been configured, and/or deployed to cloud run. See [adk-agent/README.md](adk-agent/README.md) for more information.
@@ -11,6 +29,16 @@ If the agent is being developed locally, you can use 'http://localhost:8000' as 
 ```
 REMOTE_AGENT_URL=https://<your-cloud-run-url>
 GOOGLE_APPLICATION_CREDENTIALS=/path/to/key.json
+```
+
+The following fields are optional for deployment:
+
+```
+SERVICE_ACCOUNT
+REGION
+PROJECT_ID
+
+
 ```
 
 2. Verify the token
@@ -51,20 +79,17 @@ docker run --rm -p 3000:3000 \
 
 ## Deployment
 
-If all is good, modify the `deploy.sh` file and deploy to cloud run.
-
-Note this section will need to be modified. If the variable is present in the `.env` file, it will be auto-updated
 
 ```
-# Configuration
-PROJECT_ID=${GOOGLE_CLOUD_PROJECT:-$(gcloud config get-value project)}
-SERVICE_NAME="data-companion-agent"
-REGION=${GOOGLE_CLOUD_LOCATION}
-SERVICE_ACCOUNT=${SERVICE_ACCOUNT}
-IMAGE_NAME="gcr.io/${PROJECT_ID}/${SERVICE_NAME}"
+gcloud run deploy front-end \
+  --source . \
+  --region <REGION> \
+  --project <PROJECT_ID> \
+  --service-account <SERVICE_ACCOUNT> \
+  --port 3000 \
+  --memory 1Gi \
+  --cpu 1 \
+  --description "Standalone Frontend for Copilot Kit"
+  --set-env-vars REMOTE_AGENT_URL=<REMOTE_AGENT_URL>
 ```
-If all is good, run:
 
-```
-bash deploy.sh
-```

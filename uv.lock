@@ -4,7 +4,7 @@ requires-python = "==3.12.*"
 
 [[package]]
 name = "ag-ui-adk"
-version = "0.4.1"
+version = "0.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ag-ui-protocol" },
@@ -15,9 +15,9 @@ dependencies = [
     { name = "pydantic" },
     { name = "uvicorn" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9b/8d/e4393379a08eac3f24e7f05c8db25e7dfd4f3a6414c265b3fcc26788ff22/ag_ui_adk-0.4.1.tar.gz", hash = "sha256:f7afcb352b3aa7d5c1996f15e080323309e38f1ab39d84bf51122073922d758f", size = 42194, upload-time = "2026-01-06T20:46:11.9Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fe/c3/cdf3170477b9955d525052432842db49092fedce306e07ad707abe421414/ag_ui_adk-0.4.2.tar.gz", hash = "sha256:e6048bade7301a985cf790be86d6edb2e3be206d05aff6c0170aec03b8e28e02", size = 45743, upload-time = "2026-01-22T17:45:56.446Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/3c/7cb66536a2cc2c6f67b3ab85695ab1246845c6df61cda8f29df10ce977b9/ag_ui_adk-0.4.1-py3-none-any.whl", hash = "sha256:45c72195653643011b1ce75cfe1d2d0aee44f845a01b224d31b7bc0eda2ce45b", size = 47851, upload-time = "2026-01-06T20:46:10.725Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/39/da8b5c0f875ccb1770349caaecd87a253949ccbcdc2c869929919d744551/ag_ui_adk-0.4.2-py3-none-any.whl", hash = "sha256:47017d18a128c786beb1d8b2bb3a8dc64e8a295f10e3288710b90bd5ce59dde7", size = 51478, upload-time = "2026-01-22T17:45:55.576Z" },
 ]
 
 [[package]]
@@ -268,7 +268,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ag-ui-adk", specifier = ">=0.4.1" },
+    { name = "ag-ui-adk", specifier = ">=0.4.2" },
     { name = "fastapi", specifier = ">=0.128.0" },
     { name = "google-adk", specifier = ">=1.18.0" },
     { name = "google-auth", specifier = ">=2.0.0" },
