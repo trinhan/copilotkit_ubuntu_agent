@@ -1,6 +1,7 @@
 .git
 .gitignore
 .venv
+.env
 venv
 __pycache__
 *.pyc
@@ -11,8 +12,8 @@ node_modules
 README.md
 Dockerfile
 deploy.sh
-my-copilot-app/node_modules
-my-copilot-app/.next
+**/node_modules
+**/.next
 
 !package-lock.json
 !package.json

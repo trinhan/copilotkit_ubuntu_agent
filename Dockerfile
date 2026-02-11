@@ -10,33 +10,35 @@ RUN apt-get update && apt-get install -y \
     && pip install uv \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Set working directory once at the start
 WORKDIR /app
 
-# --- Backend Setup ---
-# Copy Python configuration and install dependencies
-COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen
+# Enable uv speed optimizations
+ENV UV_PROJECT_ENVIRONMENT=/app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
 
 # --- Frontend Setup ---
-# Copy frontend and install dependencies
-COPY my-copilot-app/package.json my-copilot-app/package-lock.json ./my-copilot-app/
+# Copy only package files first for better caching
+COPY my-copilot-app/package*.json ./my-copilot-app/
 WORKDIR /app/my-copilot-app
-RUN npm install
+RUN npm ci
 
-# Copy frontend source and build
+# Copy ONLY frontend source and build
 COPY my-copilot-app/ ./
 RUN npm run build
 
-# --- Final Assembly ---
+# --- Backend Setup ---
+# Move back to root for backend and final assembly
 WORKDIR /app
-# Copy the rest of the application code
-COPY . .
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
+COPY adk-agent/ ./adk-agent/
 
-# Ensure start.sh is executable
+# Copy start.sh to root
+COPY start.sh ./
 RUN chmod +x start.sh
 
-# Expose the port (Cloud Run will set this via environment variable)
+# Final Assembly
 EXPOSE 3000
 
 # Set the entrypoint to our startup script

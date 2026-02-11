@@ -1,25 +1,35 @@
 # .gcloudignore
 # Use this to prevent large or sensitive files from being uploaded to Google Cloud Build.
 
-.git
+# Python
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+**/.DS_Store
+
+# Git
+.git/
 .gitignore
-.dockerignore
-.venv
-venv
-__pycache__
-*.pyc
-node_modules
-.next
-.DS_Store
-keys/
-!package-lock.json
-!package.json
-!uv.lock
+
+# Misc
+*.log
+*.md
 
 # Frontend specific
-my-copilot-app/node_modules
-my-copilot-app/.next
+**/node_modules
+**/.next
+
+# Large data files
+**/*.csv
+**/*.parquet
+**/*.pkl
 
 # Overrides to include required files
 !.env
-!keys/
+!README.md

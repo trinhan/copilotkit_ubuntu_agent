@@ -45,7 +45,21 @@ gcloud auth application-default login
 
 Download the service key `key.json`, noting the path. The service account name will be added to the .env file below:
 
-3. Create a `.env` file in the root directory. The following is required:
+### 3. Deployment options
+
+| Option | Description | Comms |
+| :--- | :--- | :--- |
+| **Monolith** | Single container for both Frontend + Backend. | `localhost:8000` |
+| **Separate Services** | Independent Cloud Run services. | Secure HTTPS URL |
+
+- **Use Monolith** for simpler management and low latency.
+- **Use Separate Services** for independent scaling and modular architecture.
+
+Depending on the deployment option, the set up bellow file will be different:
+
+## Monolith
+
+### 4A. Create an `.env` file in the root directory. 
 ```
 MODEL_NAME=gemini-2.5-flash
 GOOGLE_GENAI_USE_VERTEXAI=1
@@ -56,7 +70,7 @@ BIGQUERY_TABLE=
 SERVICE_ACCOUNT=XXXX.iam.gserviceaccount.com
 ```
 
-4. Tests for connectivity [Optional] 
+### 5A. Tests for connectivity [Optional] 
 
 To test that the correct credentials have been used, run the pytests.
 
@@ -68,18 +82,21 @@ This will print to screen GOOGLE_CLOUD_LOCATION, GOOGLE_CLOUD_PROJECT, Service A
 
 It will also confirm the first entry in the dependent big_query table
 
+### 6A. Run Backend
 
-### 3. Setup Backend
-Install dependencies and run:
+See the page [adk-agent README](adk-agent/README.md) for more information on developing the backend.
+Once happy, the back-end can be run locally:
 
 ```bash
 # Using uv (recommended)
 uv sync
+cd adk-agent
 uv run main.py
 ```
 *The backend will start on `http://localhost:8000`.*
 
-### 4. Setup Frontend
+### 7A. Run Frontend
+
 1. Open a new terminal.
 2. Navigate to the frontend directory:
 
@@ -92,7 +109,7 @@ npm run dev
 
 See *Testing* for an example command to assess performance
 
-### 5. Connecting the front and back end
+### 8A. Connecting the front and back end
 
 This is done in the `start.sh` script.
 
@@ -100,7 +117,7 @@ Here the front-end is expected to be reached on `http://localhost:3000` and the 
 
 To ensure that the back-end is started, there is a wait loop in `start.sh`.
 
-### 6. Running with Docker (Monolithic)
+### 9A. Running with Docker (Monolithic)
 
 To build the entire application (Backend + Frontend) in a single container. Note in this version, the `.env` file will be built into the container. To avoid this, add `.env` to the `.dockerignore` and `.gcloudignore` files.
 
@@ -121,23 +138,30 @@ docker run --rm -p 8080:8080 \
   -v /path/to/key.json:/app/key.json \
   ubuntu-agent
 ```
+
+docker run --rm -p 8080:8080 \
+  -e PORT=8080 \
+  -e GOOGLE_APPLICATION_CREDENTIALS=/app/key.json \
+  -v $(pwd)/../keys/lab-atrinh-vv5e3f7cc6-key.json:/app/key.json \
+  ubuntu-agent
+
 *The application will be accessible at `http://localhost:8080`.*
 
 **Note 1**: To run the container interactively and inspect the file structure, add `-it --entrypoint /bin/bash` to the `docker run` command.
 
 **Note 2**: If you decide not to build the `.env` file into the container, it can be mounted using `--env-file .env`
 
-### 6. Deploy to Google Cloud Run
+### 10A. Deploy to Google Cloud Run
 
-We provide a `deploy.sh` script to automate the build and deployment process using Google Cloud Build (which builds the image in the cloud).
+The `deploy.sh` script automates the build and deployment process to Google Cloud Run.
 
 1. **Prerequisites**:
    - Ensure you are logged in: `gcloud auth login`
-   - Set your project: `gcloud config set project YOUR_PROJECT_ID`
+   - Set your project: `gcloud config set project <YOUR_PROJECT_ID>`
 
 2. **Run the deployment**:
-   ```bash
-   ./deploy.sh
+   ```
+   bash deploy.sh
    ```
 
 3. **Configure Environment**:
@@ -146,7 +170,36 @@ We provide a `deploy.sh` script to automate the build and deployment process usi
    - Edit Container > Variables and Secrets > Upload the .env file if parameters change
    - Security > Service Account if the service account changes
 
----
+
+## Separate Services
+
+### 6B. Develop back-end
+
+See the instructions for the back-end in the [adk-agent README](adk-agent/README.md), including setting up `.env` file.
+Instructions for deploying to cloudrun is embedded in the README.
+
+### 7B. Develop front-end
+
+See the instructions for the front-end in the [my-copilot-app README](my-copilot-app/README.md), including setting up `.env` file.
+
+### 8B. Local Orchestration with Docker Compose (Optional)
+
+To test the front-end and back-end together locally:
+
+1. Ensure your `.env` files are set up in both the `adk-agent` and `my-copilot-app` folders.
+2. In the docker-compose.yml file, update GOOGLE_APPLICATION_CREDENTIALS to point to the key.json file in the keys folder.
+3. From the project root, run:
+
+```bash
+docker-compose up --build
+```
+3. Open [http://localhost:3000](http://localhost:3000) for the front-end.
+4. The front-end will automatically connect to the local backend at `http://localhost:8000`.
+
+### 9B. Deploy to Google Cloud Run
+
+1. Deploy the 
+
 
 ## 🛠 Features
 
