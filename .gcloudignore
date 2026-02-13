@@ -12,6 +12,7 @@
 .vscode/
 .idea/
 **/.DS_Store
+keys/**
 
 # Git
 .git/

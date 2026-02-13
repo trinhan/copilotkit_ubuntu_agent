@@ -109,6 +109,7 @@ gcloud run deploy <APP_NAME>\
   --project <PROJECT_ID> \
   --service-account <SERVICE_ACCOUNT> \ ## if applicable
   --allow-unauthenticated # optional ## also decide if we need a port here
+  --iap
 ```
 
-
+4. Otherwise deploy to agent engine
