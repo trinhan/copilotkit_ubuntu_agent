@@ -50,9 +50,9 @@ root_agent = Agent(
 
 # Wrap in app for HITL
 # See this for more information: https://google.github.io/adk-docs/apps/
-# app = App(
-#     name='main_agent', #the body with runtime wrappers that handles compressions and logging
-#     root_agent=root_agent,
+app = App(
+     name='main_agent', #the body with runtime wrappers that handles compressions and logging
+     root_agent=root_agent)
 #     trace=True,
 #     events_compaction_config=EventsCompactionConfig(
 #         compaction_interval=3,  # Compress every 3 turns
@@ -60,4 +60,4 @@ root_agent = Agent(
 #     ),
 # )
 
-__all__ = ["root_agent"]
+__all__ = ["app","root_agent"]
