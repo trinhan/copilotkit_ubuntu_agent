@@ -49,6 +49,7 @@ root_agent = Agent(
 )
 
 # Wrap in app for HITL
+# See this for more information: https://google.github.io/adk-docs/apps/
 # app = App(
 #     name='main_agent', #the body with runtime wrappers that handles compressions and logging
 #     root_agent=root_agent,
